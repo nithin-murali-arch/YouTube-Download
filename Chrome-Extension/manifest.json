@@ -3,11 +3,11 @@
   "name": "YouTube Download",
   "description": "Shows the download links for youtube videos.",
   "version": "2.1.1",
-  "permissions": ["http://www.youtube.com/*"],
+  "permissions": ["https://www.youtube.com/*"],
   "content_scripts" : [
     {
       "matches" : [
-		"http://www.youtube.com/*"
+		"https://www.youtube.com/*"
       ],
       "js" : ["content-script.js"],
       "run_at" : "document_end",

@@ -20,7 +20,10 @@ function getLinksAndFormats(urlMap) {
     var linksAndFormats = new Array();
     var numOfLinks = 0;
     for (var i = 0; i < allLinks.length; i++) {
-        var link = getCleanURL(allLinks[i]);
+		var link = getCleanURL(allLinks[i]);
+		if(!link){
+			continue;
+		}
         var itagIndex = link.lastIndexOf('itag=');
         if (itagIndex != -1) {
             var fmt = parseInt(link.substring(itagIndex + 5));
@@ -211,7 +214,7 @@ function getHTMLForLinks(linksAndFormats) {
 }
 
 function start() {
-    if (document.URL.indexOf('.youtube.com/watch?v=') == -1) return;
+    if (document.URL.indexOf('youtube.com/watch?v=') == -1) return;
 
     var error = null;
     var urlMap = null;
@@ -233,7 +236,9 @@ function start() {
     style.margin = '5px auto';
     style.boxShadow = '4px 4px 3px #999';
     style.border = '1px #999 solid';
-    style.backgroundColor = '#ffe';
+	style.backgroundColor = '#ffe';
+	style.position= 'absolute';
+    style.zIndex = 1000000;
 
     if (error == null) {
         // Append the links to the div
@@ -248,4 +253,10 @@ function start() {
     document.body.insertBefore(container_div, document.body.firstChild);
 }
 
-start();
+let interval = setInterval(function(){
+	if(document.title.match(/^(.*) - YouTube$/)){
+		clearInterval(interval)
+		start();
+	}
+}, 1000);
+
